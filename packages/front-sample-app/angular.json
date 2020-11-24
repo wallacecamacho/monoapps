@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "projects": {
+    "trip-tur-web": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/trip-tur-web",
+      "sourceRoot": "apps/trip-tur-web/src",
+      "prefix": "front-sample-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/trip-tur-web",
+            "index": "apps/trip-tur-web/src/index.html",
+            "main": "apps/trip-tur-web/src/main.ts",
+            "polyfills": "apps/trip-tur-web/src/polyfills.ts",
+            "tsConfig": "apps/trip-tur-web/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/trip-tur-web/src/favicon.ico",
+              "apps/trip-tur-web/src/assets"
+            ],
+            "styles": ["apps/trip-tur-web/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/trip-tur-web/src/environments/environment.ts",
+                  "with": "apps/trip-tur-web/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "trip-tur-web:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "trip-tur-web:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "trip-tur-web:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/trip-tur-web/tsconfig.app.json",
+              "apps/trip-tur-web/tsconfig.spec.json",
+              "apps/trip-tur-web/tsconfig.editor.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/trip-tur-web/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/trip-tur-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "trip-tur-web-e2e": {
+      "root": "apps/trip-tur-web-e2e",
+      "sourceRoot": "apps/trip-tur-web-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/trip-tur-web-e2e/cypress.json",
+            "tsConfig": "apps/trip-tur-web-e2e/tsconfig.e2e.json",
+            "devServerTarget": "trip-tur-web:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "trip-tur-web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/trip-tur-web-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/trip-tur-web-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "trip-tur-web"
+}
