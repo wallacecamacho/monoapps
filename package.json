@@ -1,10 +1,22 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "clean": "lerna clean && rimraf node_modules",
+    "del-dist": "lerna exec --stream -- rimraf .next",
+    "start": "lerna run --parallel start",
+    "web": "yarn workspace front-* run start",
+    "server": "yarn workspace api-* run start",
+    "lerna:build": "lerna run build",
+    "publish:libs": "lerna publish"
+  },
   "devDependencies": {
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.3.0",
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2"
   },
   "config": {
     "commitizen": {
